@@ -17,10 +17,31 @@ code {
     background-color: whitesmoke;
     width: 400px;
     height: 50px;
-    border: deeppink solid 5px;
+    border: black solid 3px;
+    border-radius: 20px;
 }
 
 .progress {
-    background-color: #61dafb;
+    background-color: #00BB9C;
     height: 100%;
+    border-radius: inherit;
+}
+
+.singleTask {
+    position: relative;
+    left: -35%;
+    top: -170px;
+    float: right;
+}
+
+.taskName {
+    position: inherit;
+    left: -38%;
+}
+
+.checkIsFinished {
+    position: absolute;
+    left: 102%;
+    size: inherit;
+    padding-top: 1%;
 }
