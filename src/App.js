@@ -4,13 +4,13 @@ import './App.css';
 
 
 class ProgressBar extends Component {
-    constructor() {
-        super(ProgressBar);
+    constructor(props) {
+        super(props);
         this.state = {
-            start: null,
+            start: new Date(),
             finish: null,
-            totalSteps: 8,
-            currentStep: 8
+            totalSteps: props.totalSteps,
+            currentStep: null
         }
     }
 
@@ -19,7 +19,7 @@ class ProgressBar extends Component {
             return "0%"
         } else {
             const current_pct = this.state.currentStep / this.state.totalSteps * 100;
-            return `${current_pct.toString()}%`
+            return `${current_pct}%`
         }
     }
 
@@ -35,7 +35,12 @@ class ProgressBar extends Component {
         }
     };
 
-    update(step){
+    update(step) {
+        this.setState({currentStep: step}, () => {
+            if (this.isFinished()) {
+                this.setState({finish: new Date()})
+            }
+        })
     }
 
     render() {
@@ -55,17 +60,28 @@ class ProgressBar extends Component {
 }
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-            <ProgressBar taskName={"barra1"} />
-            <ProgressBar taskName={"barra2"} />
-            <ProgressBar taskName={"barra3"} />
-        </header>
-      </div>
-    );
-  }
+    constructor(props) {
+        super(props);
+        this.state = {tasks: ["barra1", "barra2", "barra3"]}
+    };
+
+    // TODO: criar um setInterval que a cada 10 segundos cria uma nova task
+    // TODO: criar um setInterval que a cada 2 segundos incrementa aleatoriamente
+    // o step de uma task existente
+
+    render() {
+        const progressBars = this.state.tasks.map(function (value, index) {
+            return <ProgressBar key={index} taskName={value} totalSteps={8}/>
+        });
+
+        return (
+            <div className="App">
+                <header className="App-header">
+                    {progressBars}
+                </header>
+            </div>
+        );
+    }
 }
 
 export default App;
